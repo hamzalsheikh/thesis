@@ -10,6 +10,8 @@ facilities are also equipped with different clusters for different purposes and 
 For example, 50\% of Kubernetes \cite{verma_large-scale_2015}
 end users have 10+ clusters \cite{noauthor_cncf_2023} 
 , with companies like Mercedes nearing 1000 clusters \cite{noauthor_mercedes-benz_2023}.
+% Another reasons for having a multi-cluster architecture
+% is business related (i.e. create teams based partitioning), and expensive provisioning and maintenance of big clusters CITE
 
 \section{Proposed Solution}
 We theorize that it is possible to increase resource utilization of multiple clusters through loaning. 
@@ -17,10 +19,3 @@ The idea of resource loaning has been recently introduced, allowing over-subscri
 borrow resources from traffic dependent inference clusters \cite{li_lyra_2023}.
 We plan to generalize loaning to be non-workload specific. Cluster schedulers will be able to communicate 
 with each other, borrowing/lending, buying/selling, or negotiating resources.
-\newline
-
-\noindent The design and implementation is still in-progress. The current intuition is adding an extra layer 
-of scheduling when the cluster is over-subscribed \cite{zaharia_delay_2010}, but the mechanism can also be implemented 
-as an additional step in the scheduling process. A simulation is being built to serve as a starting point \cite{sched-github}, 
-and we plan to build the project on top of Kubernetes.
-
