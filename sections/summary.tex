@@ -1,0 +1,26 @@
+\section{Problem Statement}
+Data center utilization has been widely studied, with average server utilization in most data centers being low, 
+ranging from 10\% to 50\%
+% this paper cites other papers for the percentage of utilization 
+\cite{lo_heracles_2015}. 
+To combat low server utilization and diverse users, systems have been developed to allow diverse workloads to run 
+on the same cluster \cite{bhattacharya_hierarchical_2013, hindman_mesos_nodate}. 
+However, this causes increased interference between jobs, and thus, 
+facilities are also equipped with different clusters for different purposes and teams \cite{patel_what_2022, li_lyra_2023}. 
+For example, 50\% of Kubernetes \cite{verma_large-scale_2015}
+end users have 10+ clusters \cite{noauthor_cncf_2023} 
+, with companies like Mercedes nearing 1000 clusters \cite{noauthor_mercedes-benz_2023}.
+
+\section{Proposed Solution}
+We theorize that it is possible to increase resource utilization of multiple clusters through loaning. 
+The idea of resource loaning has been recently introduced, allowing over-subscribed training clusters to 
+borrow resources from traffic dependent inference clusters \cite{li_lyra_2023}.
+We plan to generalize loaning to be non-workload specific. Cluster schedulers will be able to communicate 
+with each other, borrowing/lending, buying/selling, or negotiating resources.
+\newline
+
+\noindent The design and implementation is still in-progress. The current intuition is adding an extra layer 
+of scheduling when the cluster is over-subscribed \cite{zaharia_delay_2010}, but the mechanism can also be implemented 
+as an additional step in the scheduling process. A simulation is being built to serve as a starting point \cite{sched-github}, 
+and we plan to build the project on top of Kubernetes.
+
