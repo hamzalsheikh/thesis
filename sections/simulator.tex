@@ -16,4 +16,12 @@ This gives visibility for schedulers who need to borrow resources.
 The actual implementation should be closer to a subscription service, 
 were clusters agree to participate in the market. The registry itself is not a main 
 component for the actual implementation, but if we end up with a policy that needs a control service, 
-or a shared resource, the registry in the simulation will play this role. 
+or a shared resource, the registry in the simulation will play this role.
+
+
+\subsubsection{Scheduler}
+The scheduler is built with a cluster as a resource attached to it. 
+This can also be decoupled and a scheduler can exist as a standalone node. 
+The current basic implementation have the scheduler receive job requests through http requests. 
+Jobs have static memory and CPU requirements and time to complete. If not enough resources 
+are found on the cluster then a policy is invoked for borrowing/lending.
