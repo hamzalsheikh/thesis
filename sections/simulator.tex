@@ -8,3 +8,12 @@ and we plan to build the project on top of Kubernetes.
 I've implemented a simulation to try to mimic the how clusters can interact and test some of the policies. 
 The implementation is in Go. The end goal of the simulation is the ability to deploy clusters on different 
 nodes/containers and test policies.
+
+\subsection{Components}
+\subsubsection{Registry}
+The registry tracks the availability of the schedulers, and informs clusters with it. 
+This gives visibility for schedulers who need to borrow resources. 
+The actual implementation should be closer to a subscription service, 
+were clusters agree to participate in the market. The registry itself is not a main 
+component for the actual implementation, but if we end up with a policy that needs a control service, 
+or a shared resource, the registry in the simulation will play this role. 
