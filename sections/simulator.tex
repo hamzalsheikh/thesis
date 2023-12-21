@@ -18,10 +18,21 @@ were clusters agree to participate in the market. The registry itself is not a m
 component for the actual implementation, but if we end up with a policy that needs a control service, 
 or a shared resource, the registry in the simulation will play this role.
 
-
 \subsubsection{Scheduler}
 The scheduler is built with a cluster as a resource attached to it. 
 This can also be decoupled and a scheduler can exist as a standalone node. 
 The current basic implementation have the scheduler receive job requests through http requests. 
 Jobs have static memory and CPU requirements and time to complete. If not enough resources 
 are found on the cluster then a policy is invoked for borrowing/lending.
+
+
+\subsubsection{Client}
+Client sends jobs to schedulers. The client has a many-to-one relationship with schedulers
+(a scheduler can have multiple clients but not visa versa).
+The client is responsible for deciding the size of jobs and the rate jobs is sent to the scheduler.
+Jobs are sampled from distributions:
+\begin{itemize}
+    \item \textbf{Job size:} Currently following a beta distribution, approximating a bounded normal distribution. 
+    \item \textbf{Job send rate:} Have two options, the Weibull distribution simulating the interarrival time, and 
+    Poisson distribution simulating average jobs in a time interval.
+\end{itemize}
