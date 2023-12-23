@@ -1,18 +1,12 @@
-\section{Problem Statement}
-Data center utilization has been widely studied, with average server utilization in most data centers being low, 
-ranging from 10\% to 50\%
-% this paper cites other papers for the percentage of utilization 
-\cite{lo_heracles_2015}. 
-To combat low server utilization and diverse users, systems have been developed to allow diverse workloads to run 
-on the same cluster \cite{bhattacharya_hierarchical_2013, hindman_mesos_nodate}. 
-However, this causes increased interference between jobs, and thus, 
-facilities are also equipped with different clusters for different purposes and teams \cite{patel_what_2022, li_lyra_2023}. 
-For example, 50\% of Kubernetes \cite{verma_large-scale_2015}
-end users have 10+ clusters \cite{noauthor_cncf_2023} 
-, with companies like Mercedes nearing 1000 clusters \cite{noauthor_mercedes-benz_2023}.
-% Another reasons for having a multi-cluster architecture
-% is business related (i.e. create teams based partitioning), and expensive provisioning and maintenance of big clusters CITE
+\section{Summary}
+Data centers and the cloud are fundamental components in the modern tech stack. 
+Various tools like Kubernetes are built for the efficient orchastration of the cloud resources.
+One crucial component of the orchastration is scheduling, i.e. finding a suitable node in the cluster 
+to run a job. In this work, we aim to (introduce, implement, provide) a mechanism that allows different clusters to communicate 
+with each other, providing a tool clusters can use to borrow and lend their resources, in an attempt to improve 
+the performance of the clusters. To do this, we run simulated experiments to find workloads and policies that 
+would benefit from such a mechanism, as well as run various policies on production workloads.
 
-\subsection{Thesis Statement}
-It is possible to increase cluster resource utilization, decrease average job completion time, and/or reduce average cost by incentivizing clusters
-to share resources through lending and borrowing mechanisms, generalizing resource lending and decoupling it from workload specificity.
+% Needs more details:
+% - improve cluster performance
+% - Last sentence need revision
