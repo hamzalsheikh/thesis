@@ -1,3 +1,24 @@
 \section{Methodology}
+% Outline
+The goal is to generalize borrowing and lending resources between different clusters 
+without loosing the "benefits" of the multi-cluster paradigm. % assuming we're talking about clusters in same organization
+This can be achieved by providing a mechanism for schedulers of different clusters to:
 
-Explain the mechanism of borrowing and lending resources 
+1- interact with each other:
+When a scheduler needs to borrow resources, it has a list of possible clusters to ask
+% Service mesh between clusters?  Registry
+% https://www.cncf.io/blog/2021/04/12/simplifying-multi-clusters-in-kubernetes/
+% https://istio.io/latest/docs/ops/deployment/deployment-models/#multiple-meshes
+
+2- share resources with each other
+Create a mechanism to allow resources to be shared between clusters.
+% create a VM/container that is "managed" by the borrower for a certain amount of time
+
+3- gain something in return
+this is dependent on the policies.
+% the goal is to test different policies and see which ones, coupled with the appropriate workload, 
+% achieves one of the goals stated in the thesis statement.
+3-1- Profit motivated. This encompass a cost function, which dictates how much a resource is "worth" for
+the cluster, or if there are free resources or jobs that can be descheduled for a gain.
+3-2- Cooporative (favors)
+3-3- Deals
