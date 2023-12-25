@@ -9,7 +9,11 @@ When a scheduler needs to borrow resources, it has a list of possible clusters t
 % Service mesh between clusters?  Registry
 % https://www.cncf.io/blog/2021/04/12/simplifying-multi-clusters-in-kubernetes/
 % https://istio.io/latest/docs/ops/deployment/deployment-models/#multiple-meshes
-
+% Introduce level of trust and possible mechanisms based on the level of trust:
+%   like:
+%       - clusters can know each other capacities and create a schedule to benefit both of them (far fetched)
+%       - clusters interact peer-to-peer and negotiate resources
+%       - control node controls the communication between clusters (ask control node for resource, provide control node with resource) 
 2- share resources with each other
 Create a mechanism to allow resources to be shared between clusters.
 % create a VM/container that is "managed" by the borrower for a certain amount of time
