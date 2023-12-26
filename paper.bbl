@@ -1,0 +1,65 @@
+\begin{thebibliography}{10}
+
+\bibitem{sched-github}
+Multiple scheduler simulation.
+\newblock \url{https://github.com/hamzalsheikh/scheduling-sandboxd}.
+
+\bibitem{noauthor_cncf_2023}
+{CNCF} {Annual} {Survey} 2022.
+\newblock \url{https://www.cncf.io/reports/cncf-annual-survey-2022/}, Jan.
+  2023.
+
+\bibitem{noauthor_mercedes-benz_2023}
+Mercedes-{Benz}.
+\newblock \url{https://www.cncf.io/case-studies/mercedes-benz/}, June 2023.
+
+\bibitem{bhattacharya_hierarchical_2013}
+{\sc Bhattacharya, A.~A., Culler, D., Friedman, E., Ghodsi, A., Shenker, S.,
+  and Stoica, I.}
+\newblock Hierarchical scheduling for diverse datacenter workloads.
+\newblock In {\em Proceedings of the 4th annual {Symposium} on {Cloud}
+  {Computing}\/} (Santa Clara California, Oct. 2013), ACM, pp.~1--15.
+
+\bibitem{hindman_mesos_nodate}
+{\sc Hindman, B., Konwinski, A., Zaharia, M., Ghodsi, A., Joseph, A.~D., Katz,
+  R., Shenker, S., and Stoica, I.}
+\newblock Mesos: {A} {Platform} for {Fine}-{Grained} {Resource} {Sharing} in
+  the {Data} {Center}.
+
+\bibitem{li_lyra_2023}
+{\sc Li, J., Xu, H., Zhu, Y., Liu, Z., Guo, C., and Wang, C.}
+\newblock Lyra: {Elastic} {Scheduling} for {Deep} {Learning} {Clusters}.
+\newblock In {\em Proceedings of the {Eighteenth} {European} {Conference} on
+  {Computer} {Systems}\/} (Rome Italy, May 2023), ACM, pp.~835--850.
+
+\bibitem{lo_heracles_2015}
+{\sc Lo, D., Cheng, L., Govindaraju, R., Ranganathan, P., and Kozyrakis, C.}
+\newblock Heracles: improving resource efficiency at scale.
+\newblock In {\em Proceedings of the 42nd {Annual} {International} {Symposium}
+  on {Computer} {Architecture}\/} (Portland Oregon, June 2015), ACM,
+  pp.~450--462.
+
+\bibitem{patel_what_2022}
+{\sc Patel, T., Tiwari, D., Kettimuthu, R., Allcock, W., Rich, P., and Liu, Z.}
+\newblock What does {Inter}-{Cluster} {Job} {Submission} and {Execution}
+  {Behavior} {Reveal} to {Us}?
+\newblock In {\em 2022 {IEEE} {International} {Conference} on {Cluster}
+  {Computing} ({CLUSTER})\/} (Sept. 2022), pp.~35--46.
+\newblock ISSN: 2168-9253.
+
+\bibitem{verma_large-scale_2015}
+{\sc Verma, A., Pedrosa, L., Korupolu, M.~R., Oppenheimer, D., Tune, E., and
+  Wilkes, J.}
+\newblock Large-scale cluster management at {Google} with {Borg}.
+\newblock In {\em Proceedings of the {European} {Conference} on {Computer}
+  {Systems} ({EuroSys})\/} (Bordeaux, France, 2015).
+
+\bibitem{zaharia_delay_2010}
+{\sc Zaharia, M., Borthakur, D., Sen~Sarma, J., Elmeleegy, K., Shenker, S., and
+  Stoica, I.}
+\newblock Delay scheduling: a simple technique for achieving locality and
+  fairness in cluster scheduling.
+\newblock In {\em Proceedings of the 5th {European} conference on {Computer}
+  systems\/} (Paris France, Apr. 2010), ACM, pp.~265--278.
+
+\end{thebibliography}

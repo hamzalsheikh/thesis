@@ -1,0 +1,51 @@
+This is BibTeX, Version 0.99d (TeX Live 2022)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: paper.aux
+The style file: acm.bst
+Database file #1: proposal.bib
+Warning--to sort, need author or key in noauthor_cncf_2023
+Warning--to sort, need author or key in noauthor_mercedes-benz_2023
+Warning--to sort, need author or key in sched-github
+Warning--empty journal in hindman_mesos_nodate
+You've used 10 entries,
+            2253 wiz_defined-function locations,
+            581 strings with 6215 characters,
+and the built_in function-call counts, 4053 in all, are:
+= -- 369
+> -- 232
+< -- 0
++ -- 96
+- -- 86
+* -- 322
+:= -- 614
+add.period$ -- 27
+call.type$ -- 10
+change.case$ -- 73
+chr.to.int$ -- 0
+cite$ -- 14
+duplicate$ -- 159
+empty$ -- 314
+format.name$ -- 86
+if$ -- 864
+int.to.chr$ -- 0
+int.to.str$ -- 10
+missing$ -- 7
+newline$ -- 50
+num.names$ -- 14
+pop$ -- 109
+preamble$ -- 1
+purify$ -- 63
+quote$ -- 0
+skip$ -- 112
+stack$ -- 0
+substring$ -- 189
+swap$ -- 50
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 40
+warning$ -- 4
+while$ -- 29
+width$ -- 12
+write$ -- 97
+(There were 4 warnings)
