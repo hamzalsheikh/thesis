@@ -10,7 +10,6 @@ To combat that, we generalize borrowing resources into resource trading between 
 A mechanism for sharing resources: (create a VM or container at the lender cluster that the borrower can use)
 \\ And lastly, policies that dictates decision making and incentive primitives. % should we include policies here?
 
-% INSERT ALGORITHM
 \begin{algorithm}
 \caption{Basic Layered Scheduling}
 \begin{algorithmic}
@@ -31,6 +30,25 @@ A mechanism for sharing resources: (create a VM or container at the lender clust
     \EndFor
 \end{algorithmic}
 \end{algorithm}
+
+\begin{algorithm}
+\caption{Basic Borrowing Algorithm}
+\begin{algorithmic}
+    \For{job in BorrowQueue}
+       \State $borrowed \gets BorrowResources(job)$ \Comment{per borrowing policy}
+        \If{$ borrowed != True$}
+        \State Couldn't borrow resources, try scheduling it again on cluster (policy dependent)
+        \State $BorrowQueue \gets BorrowQueue - job$
+        \State $WaitQueue \gets WaitQueue + job$
+        \Else 
+        \State Resources borrowed, wait for result in another process
+        \State $BorrowQueue \gets BorrowQueue - job$
+        \State $BorrowedQueue \gets BorrowedQueue + job$
+        \EndIf
+    \EndFor
+\end{algorithmic}
+\end{algorithm}
+
 
 % % Outline
 % The goal is to generalize borrowing and lending resources between different clusters 
