@@ -11,7 +11,26 @@ A mechanism for sharing resources: (create a VM or container at the lender clust
 \\ And lastly, policies that dictates decision making and incentive primitives. % should we include policies here?
 
 % INSERT ALGORITHM
+\begin{algorithm}
+\caption{Basic Layered Scheduling}
+\begin{algorithmic}
+    \For{job in WaitQueue} \Comment{sorted by X policy}
+        \State $scheduled \gets ScheduleJob(job)$
+        \If{$scheduled != True$}
+        \State $BorrowQueue \gets BorrowQueue + job$
+        \State $WaitQueue \gets WaitQueue - job$
+        \EndIf
+    \EndFor
 
+    \For{job in ReadyQueue} \Comment{sorted by X policy}
+        \State $scheduled \gets ScheduleJob(job)$
+        \If{$scheduled != True$}
+        \State $WaitQueue \gets WaitQueue + job$
+        \State $ReadyQueue \gets ReadyQueue - job$
+        \EndIf
+    \EndFor
+\end{algorithmic}
+\end{algorithm}
 
 % % Outline
 % The goal is to generalize borrowing and lending resources between different clusters 
