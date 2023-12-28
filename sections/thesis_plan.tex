@@ -1,7 +1,9 @@
 \section{Thesis Plan}
+% the goal is to test different policies and see which ones, coupled with the appropriate workload, 
+% achieves one of the goals stated in the thesis statement.
 
 To demonstrate the validity of the proposed mechanism, we plan to test different trading policies 
-on different workloads.
+on different workloads on a scheduling simulator \cite{sched-github}.
 
 % if i want to implement the mechanism on kubernetes, need to mention it here
 % and add an implementation section
@@ -10,6 +12,24 @@ on different workloads.
 Test different policies and different synthetic workloads on the simulator. 
 Run production workloads on the simulator and compare changes.
 
+We have two sources of workloads:
+\begin{enumerate}
+    \item Synthetic: Create workloads in an attempt to find a workload-policy match
+    \item Publicly available production workloads:
+        \begin{enumerate}
+            \item Google Trace % https://github.com/google/cluster-data/blob/master/ClusterData2019.md
+            % the alibaba 2023 version trace might work, needs further investigation
+            \item Alibaba Trace % https://github.com/alibaba/clusterdata
+        \end{enumerate}
+\end{enumerate}
+
+\subsection{Policy}
+% policies that dictates decision making and incentive primitives.
+Policies dictate the schedulers' trading decision-making (options?), and 
+act as the knobs to tune (trading intencity?). It also includes the possible trading incentives.
+
+% a hypothetical example of a simple policy is: (if capacity is less than 80\% accepts loaning requests for 1\$ for 1 
+% unit of CPU time and 1\$ per GB of memory) 
 \subsection{Evaluation}
 % Variables
 1- workloads % encompasses cluster util
@@ -17,11 +37,11 @@ Run production workloads on the simulator and compare changes.
 3- cluster sizes
 
 % Measurments
-1- From thesis outcomes :
-    1-1- Average job completion time
+1- From thesis outcomes : (per cluster and total of all clusters)
+    1-1- Average job completion time (AJCT)
     1-2- Average cluster utilization
     1-3- Average cost reduction
-
+    1-4- 
 2- Mechanism specific: 
    2-1- time taken to find lender
    2-2- overhead of borrowing on lender
