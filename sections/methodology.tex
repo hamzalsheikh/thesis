@@ -1,21 +1,24 @@
 % This section does not mention the possibility of applying the mechanism to clusters of different organizations
 \section{Methodology}
-One negative outcome of the multiple-clusters architecture is the partitioning of resources. 
-To combat that, we generalize borrowing resources into resource trading between various clusters. 
-\\ We first establish a communication channel between clusters, and that can be:
-\\ \begin{enumerate}
-    \item peer-to-peer
-    \item Through a control node that facilitates the interaction (broker)
-\end{enumerate}
-A mechanism for sharing resources: (create a VM or container at the lender cluster that the borrower can use)
-\\ And lastly, policies that dictates decision making and incentive primitives. % should we include policies here?
+
+\fbox{
+    \begin{minipage}{35em}
+\textbf{Thesis Statement:}
+It is possible to increase cluster resource utilization, decrease average job completion time, 
+and/or reduce average cost by incentivizing clusters to share resources through lending and borrowing mechanisms, 
+generalizing resource lending and decoupling it from workload specificity.
+    \end{minipage}
+}
+\\ \\ To address the cost of the multi-cluster architecture, we propose a simple mechanism. When needed, 
+the scheduler of an over-subscribed cluster tries to schedule some of its jobs on other clusters nodes. 
+This is illustrated by the following algorithm:
 
 \begin{algorithm}
 \caption{Basic Layered Scheduling}
 \begin{algorithmic}
     \For{job in WaitQueue} \Comment{sorted by X policy}
         \State $scheduled \gets ScheduleJob(job)$
-        \If{$scheduled != True$}
+        \If{$scheduled \neq True$}
         \State $BorrowQueue \gets BorrowQueue + job$
         \State $WaitQueue \gets WaitQueue - job$
         \EndIf
@@ -23,7 +26,7 @@ A mechanism for sharing resources: (create a VM or container at the lender clust
 
     \For{job in ReadyQueue} \Comment{sorted by X policy}
         \State $scheduled \gets ScheduleJob(job)$
-        \If{$scheduled != True$}
+        \If{$scheduled \neq True$}
         \State $WaitQueue \gets WaitQueue + job$
         \State $ReadyQueue \gets ReadyQueue - job$
         \EndIf
@@ -31,23 +34,38 @@ A mechanism for sharing resources: (create a VM or container at the lender clust
 \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}
-\caption{Basic Borrowing Algorithm}
-\begin{algorithmic}
-    \For{job in BorrowQueue}
-       \State $borrowed \gets BorrowResources(job)$ \Comment{per borrowing policy}
-        \If{$ borrowed != True$}
-        \State Couldn't borrow resources, try scheduling it again on cluster (policy dependent)
-        \State $BorrowQueue \gets BorrowQueue - job$
-        \State $WaitQueue \gets WaitQueue + job$
-        \Else 
-        \State Resources borrowed, wait for result in another process
-        \State $BorrowQueue \gets BorrowQueue - job$
-        \State $BorrowedQueue \gets BorrowedQueue + job$
-        \EndIf
-    \EndFor
-\end{algorithmic}
-\end{algorithm}
+The readyQueue includes jobs new to the cluster not scheduled yet, waitQueue jobs are failed to schedule jobs, 
+and borrowQueue are jobs the schedule is trying to schedule at a different cluster. The simplicity of this algorithm masks 
+lots of policies that can be implemented in a more complex system, but serves the purpose of showing what a layered schedule 
+might look like.\\
+The scheduler then requests resources from other clusters based on a specific policy (more on that in thesis plan), 
+the job is either run on that cluster, or returned to the scheduler to try and schedule it locally again, probably with 
+higher priority.
+
+%% We first create a communication channel between clusters, and that can be:
+%% \\ \begin{enumerate}
+    %% \item peer-to-peer
+    %% \item Through a control node that facilitates the interaction (broker)
+%% \end{enumerate}
+%% A mechanism for sharing resources: (create a VM or container at the lender cluster that the borrower can use)
+%% \\ And lastly, policies that dictates decision making and incentive primitives. % should we include policies here?
+%% \begin{algorithm}
+%% \caption{Basic Borrowing Algorithm}
+%% \begin{algorithmic}
+    %% \For{job in BorrowQueue}
+       %% \State $borrowed \gets BorrowResources(job)$ \Comment{per borrowing policy}
+        %% \If{$ borrowed != True$}
+        %% \State Couldn't borrow resources, try scheduling it again on cluster (policy dependent)
+        %% \State $BorrowQueue \gets BorrowQueue - job$
+        %% \State $WaitQueue \gets WaitQueue + job$
+        %% \Else 
+        %% \State Resources borrowed, wait for result in another process
+        %% \State $BorrowQueue \gets BorrowQueue - job$
+        %% \State $BorrowedQueue \gets BorrowedQueue + job$
+        %% \EndIf
+    %% \EndFor
+%% \end{algorithmic}
+%% \end{algorithm}
 
 
 % % Outline
