@@ -13,13 +13,18 @@ end users have 10+ clusters \cite{noauthor_cncf_2023}
 Isolation, location, and scalability are among other reasons organizations deploy multiple clusters.
 % CITE -> https://cloud.google.com/anthos/fleet-management/docs/multi-cluster-use-cases
 
-The idea of resource loaning has been recently introduced, allowing over-subscribed training clusters to 
-borrow resources from traffic dependent inference clusters \cite{li_lyra_2023}.
+However, the separation of resources and users into different clusters is not without a cost. 
+Resource paritioning degrades performance % needs CITE
+and leads to non optimal schedules because of reduced scheduler visibility.\\ % needs CITE
+
+To retain the benefits of separating clusters, and reduce its cost, resource loaning has been recently 
+introduced, allowing over-subscribed training clusters to 
+borrow resources from traffic dependent inference clusters \cite{li_lyra_2023}. This keeps each cluster disconnected 
+while allowing the conditional sharing of resources when needed.
+We plan to generalize loaning to be non-workload specific. Cluster schedulers will be able to communicate 
+with each other when needed, borrowing/lending, buying/selling, or negotiating resources. % or (to trade resources)
 
 \subsection{Thesis Statement}
 It is possible to increase cluster resource utilization, decrease average job completion time, 
 and/or reduce average cost by incentivizing clusters to share resources through lending and borrowing mechanisms, 
 generalizing resource lending and decoupling it from workload specificity.
-
-% We plan to generalize loaning to be non-workload specific. Cluster schedulers will be able to communicate 
-% with each other, borrowing/lending, buying/selling, or negotiating resources.
