@@ -42,6 +42,14 @@ The scheduler then requests resources from other clusters based on a specific po
 the job is either run on that cluster, or returned to the scheduler to try and schedule it locally again, probably with 
 higher priority.
 
+\subsection{Policy}
+% policies that dictates decision making and incentive primitives.
+Policies dictate the schedulers' trading decision-making (options?), and 
+act as the knobs to tune (trading intencity?). It also includes the possible trading incentives.
+
+% a hypothetical example of a simple policy is: (if capacity is less than 80\% accepts loaning requests for 1\$ for 1 
+% unit of CPU time and 1\$ per GB of memory) 
+
 % TODO: explain the 3 thesis goals 
 
 
@@ -82,6 +90,7 @@ higher priority.
 % % Service mesh between clusters?  Registry
 % % https://www.cncf.io/blog/2021/04/12/simplifying-multi-clusters-in-kubernetes/
 % % https://istio.io/latest/docs/ops/deployment/deployment-models/#multiple-meshes
+% % https://github.com/istio-ecosystem/admiral 
 % % Introduce level of trust and possible mechanisms based on the level of trust:
 % %   like:
 % %       - clusters can know each other capacities and create a schedule to benefit both of them (far fetched)
