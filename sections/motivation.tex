@@ -14,12 +14,20 @@ Isolation, location, and scalability are among other reasons organizations deplo
 % CITE -> https://cloud.google.com/anthos/fleet-management/docs/multi-cluster-use-cases
 
 However, the separation of resources and users into different clusters is not without a cost. 
-Resource paritioning degrades performance % needs CITE
+Resource partitioning degrades performance % needs CITE
 and leads to non optimal schedules because of reduced scheduler visibility.\\ % needs CITE
 
-To retain the benefits of separating clusters, and reduce its cost, resource loaning has been recently 
-introduced, allowing over-subscribed training clusters to 
-borrow resources from traffic dependent inference clusters \cite{li_lyra_2023}. This keeps each cluster disconnected 
-while allowing the conditional sharing of resources when needed.
+Researchers at ByteDance observed that their inference cluster utilization is usually around 40\% because 
+of diurnal traffic patterns, and that their training cluster is always over subscribed. 
+To retain the benefits of cluster separation, and reduce its cost, they introduced \textit{capacity loaning}, 
+a mechanism that allows clusters to loan resources to other clusters without losing ownership.
+Their policy allows the training cluster to borrow resources from the inference one, while permitting the 
+inference cluster to reclaim resources dynamically. 
+Compared to a baseline FIFO scheduler, capacity loaning recorded a 1.39x reduction in average queueing time and a 1.31x 
+reduction in job completion time (JCT) \cite{li_lyra_2023}.
+% do i still need to mention this?
+% This keeps each cluster disconnected while allowing the conditional sharing of resources when needed.
+
+% GO BEYOND THEIR WORK / EVEN MORE THAN GENERALIZATION
 We plan to generalize loaning to be non-workload specific. Cluster schedulers will be able to communicate 
 with each other when needed, borrowing/lending, buying/selling, or negotiating resources. % or (to trade resources)
