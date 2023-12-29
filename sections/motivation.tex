@@ -25,9 +25,11 @@ Their policy allows the training cluster to borrow resources from the inference 
 inference cluster to reclaim resources dynamically. 
 Compared to a baseline FIFO scheduler, capacity loaning recorded a 1.39x reduction in average queueing time and a 1.31x 
 reduction in job completion time (JCT) \cite{li_lyra_2023}.
-% do i still need to mention this?
-% This keeps each cluster disconnected while allowing the conditional sharing of resources when needed.
 
+Even with the paper constraints (single policy, unidirectional loaning, and a pair of clusters), capacity loaning has 
+proved to be effective. Our plan is to build upon this concept, and expand capacity loaning to a more robust and general 
+mechanism. 
+%\hl{possible names?: capacity trading /resource trading / resource fluidity},  we can relate to sky computing too
 % GO BEYOND THEIR WORK / EVEN MORE THAN GENERALIZATION
-We plan to generalize loaning to be non-workload specific. Cluster schedulers will be able to communicate 
-with each other when needed, borrowing/lending, buying/selling, or negotiating resources. % or (to trade resources)
+% We plan to generalize loaning to be non-workload specific. Cluster schedulers will be able to communicate 
+% with each other when needed, borrowing/lending, buying/selling, or negotiating resources. % or (to trade resources)
