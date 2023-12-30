@@ -16,7 +16,7 @@ Isolation, location, and scalability are among other reasons organizations deplo
 However, the separation of resources and users into different clusters is not without a cost. 
 Resource partitioning degrades performance % needs CITE
 and leads to non optimal schedules because of reduced scheduler visibility.\\ % needs CITE
-
+% introducing capacity loaning
 Researchers at ByteDance observed that their inference cluster utilization is usually around 40\% because 
 of diurnal traffic patterns, and that their training cluster is always over subscribed. 
 To retain the benefits of cluster separation, and reduce its cost, they introduced \textit{capacity loaning}, 
@@ -24,11 +24,24 @@ a mechanism that allows clusters to loan resources to other clusters without los
 Their policy allows the training cluster to borrow resources from the inference one, while permitting the 
 inference cluster to reclaim resources dynamically. 
 Compared to a baseline FIFO scheduler, capacity loaning recorded a 1.39x reduction in average queueing time and a 1.31x 
-reduction in job completion time (JCT) \cite{li_lyra_2023}.
+reduction in job completion time (JCT), proving the effectiveness of the method in a constrained environment. \cite{li_lyra_2023}.
+% Even with the paper constraints (single policy, unidirectional loaning, and a pair of clusters), capacity loaning has 
+% proved to be effective. 
 
-Even with the paper constraints (single policy, unidirectional loaning, and a pair of clusters), capacity loaning has 
-proved to be effective. Our plan is to build upon this concept, and expand capacity loaning to a more robust and general 
-mechanism. 
+% introducing delay scheduling 
+Delay scheduling is an algorithm designed to address the conflict between fairness and data locality in 
+shared clusters \cite{zaharia_delay_2010}. 
+If a job is set to be scheduled according to the fairness policy but the node its data is on is full, 
+the scheduler delays scheduling it in an attempt to schedule it on that node when it frees up. The algorithm have 
+several passes trying to schedule the job as close as it can, increasing the level (how far) it is from its data every time 
+to guarantee its eventual scheduling.
+%
+
+%Our plan is to build upon this concept, and expand capacity loaning to a more robust and general 
+%mechanism. 
+
+Our plan stems from both delay scheduling and capacity loaning, creating a novel mechanism for schedulers 
+to trade resources.
 %\hl{possible names?: capacity trading /resource trading / resource fluidity},  we can relate to sky computing too
 % GO BEYOND THEIR WORK / EVEN MORE THAN GENERALIZATION
 % We plan to generalize loaning to be non-workload specific. Cluster schedulers will be able to communicate 
