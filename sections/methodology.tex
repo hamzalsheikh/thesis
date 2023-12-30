@@ -19,18 +19,25 @@ providing clusters with a resource trading mechanism and a pluggable policy inte
 virtual sharing of resources across clusters.
    \end{minipage}
 }
-\\ \\ To address the cost of the multi-cluster architecture, we propose a simple mechanism. When needed, 
-the scheduler of an over-subscribed cluster tries to schedule some of its jobs on other clusters nodes. 
-This is illustrated by the following algorithm:
 
+% Concept introduction
+% Do not communicate by sharing memory           ; instead, share memory    by communicating.
+% Do not communicate by changing server ownership; instead, share resources by communicating.
+
+% I don't want to mention capacity or whatever need because that is policy dependent
+When needed, a cluster communicates with other clusters visible to it, requesting to use resources. A policy \ref{policy} 
+controls when a cluster requests those resources, in addition to dictating when the other clusters accept 
+providing them. In the following algorithm, the scheduler of an over-subscribed cluster tries to schedule some of 
+its jobs on other clusters nodes. 
+
+% Example Algorithm
 \begin{algorithm}
-\caption{Basic Layered Scheduling}
+\caption{Trading Scheduling Algorithm - Requester}
 \begin{algorithmic}
     \For{job in WaitQueue} \Comment{sorted by X policy}
         \State $scheduled \gets ScheduleJob(job)$
         \If{$scheduled \neq True$}
-        \State $BorrowQueue \gets BorrowQueue + job$
-        \State $WaitQueue \gets WaitQueue - job$
+        \State $BorrowResources(job)$
         \EndIf
     \EndFor
 
@@ -38,83 +45,31 @@ This is illustrated by the following algorithm:
         \State $scheduled \gets ScheduleJob(job)$
         \If{$scheduled \neq True$}
         \State $WaitQueue \gets WaitQueue + job$
-        \State $ReadyQueue \gets ReadyQueue - job$
         \EndIf
     \EndFor
 \end{algorithmic}
 \end{algorithm}
 
-The readyQueue includes jobs new to the cluster not scheduled yet, waitQueue jobs are failed to schedule jobs, 
-and borrowQueue are jobs the schedule is trying to schedule at a different cluster. The simplicity of this algorithm masks 
-lots of policies that can be implemented in a more complex system, but serves the purpose of showing what a layered schedule 
-might look like.\\
-The scheduler then requests resources from other clusters based on a specific policy (more on that in thesis plan), 
-the job is either run on that cluster, or returned to the scheduler to try and schedule it locally again, probably with 
-higher priority.
+\begin{algorithm}
+    \caption{Trading Scheduling Algorithm - Receiver}
+    \begin{algorithmic}
+            \State $ resources \gets BorrowRequest $ 
+            \If{$Policy(resources) = True$} \Comment{ P: if capacity $\leq 60\%$ approve}
+            \State $sendAcceptRequest(job, cluster)$
+            \State $prepareResources(resources)$
+            \State $allowAccess$
+            \EndIf
+    \end{algorithmic}
+    \end{algorithm} 
 
-\subsection{Policy}
+
+% Clear explanation of resource trading
+
+% Clear explanation of pluggable policy interface
+\subsection{Policy} \label{policy}
 % policies that dictates decision making and incentive primitives.
 Policies dictate the schedulers' trading decision-making (options?), and 
 act as the knobs to tune (trading intencity?). It also includes the possible trading incentives.
 
-% a hypothetical example of a simple policy is: (if capacity is less than 80\% accepts loaning requests for 1\$ for 1 
-% unit of CPU time and 1\$ per GB of memory) 
+% explain the 3 thesis goals (give policy examples for each goal?)
 
-% TODO: explain the 3 thesis goals 
-
-
-
-%% We first create a communication channel between clusters, and that can be:
-%% \\ \begin{enumerate}
-    %% \item peer-to-peer
-    %% \item Through a control node that facilitates the interaction (broker)
-%% \end{enumerate}
-%% A mechanism for sharing resources: (create a VM or container at the lender cluster that the borrower can use)
-%% \\ And lastly, policies that dictates decision making and incentive primitives. % should we include policies here?
-%% \begin{algorithm}
-%% \caption{Basic Borrowing Algorithm}
-%% \begin{algorithmic}
-    %% \For{job in BorrowQueue}
-       %% \State $borrowed \gets BorrowResources(job)$ \Comment{per borrowing policy}
-        %% \If{$ borrowed != True$}
-        %% \State Couldn't borrow resources, try scheduling it again on cluster (policy dependent)
-        %% \State $BorrowQueue \gets BorrowQueue - job$
-        %% \State $WaitQueue \gets WaitQueue + job$
-        %% \Else 
-        %% \State Resources borrowed, wait for result in another process
-        %% \State $BorrowQueue \gets BorrowQueue - job$
-        %% \State $BorrowedQueue \gets BorrowedQueue + job$
-        %% \EndIf
-    %% \EndFor
-%% \end{algorithmic}
-%% \end{algorithm}
-
-
-% % Outline
-% The goal is to generalize borrowing and lending resources between different clusters 
-% without losing the "benefits" of the multi-cluster paradigm. % assuming we're talking about clusters in same organization
-% This can be achieved by providing a mechanism for schedulers of different clusters to:
-
-% 1- interact with each other:
-% When a scheduler needs to borrow resources, it has a list of possible clusters to ask
-% % Service mesh between clusters?  Registry
-% % https://www.cncf.io/blog/2021/04/12/simplifying-multi-clusters-in-kubernetes/
-% % https://istio.io/latest/docs/ops/deployment/deployment-models/#multiple-meshes
-% % https://github.com/istio-ecosystem/admiral 
-% % Introduce level of trust and possible mechanisms based on the level of trust:
-% %   like:
-% %       - clusters can know each other capacities and create a schedule to benefit both of them (far fetched)
-% %       - clusters interact peer-to-peer and negotiate resources
-% %       - control node controls the communication between clusters (ask control node for resource, provide control node with resource) 
-% 2- share resources with each other
-% Create a mechanism to allow resources to be shared between clusters.
-% % create a VM/container that is "managed" by the borrower for a certain amount of time
-
-% 3- gain something in return
-% this is dependent on the policies.
-% % the goal is to test different policies and see which ones, coupled with the appropriate workload, 
-% % achieves one of the goals stated in the thesis statement.
-% 3-1- Profit motivated. This encompass a cost function, which dictates how much a resource is "worth" for
-% the cluster, or if there are free resources or jobs that can be descheduled for a gain.
-% 3-2- Cooporative (favors)
-% 3-3- Deals
