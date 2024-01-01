@@ -38,7 +38,7 @@ enables the trading with multiple clusters, so clusters can trade resources with
 In addition to that, policies are created to optimize a specific performance metric, acting as knobs to 
 tune performance enhancement.
 
-The following algorithms show a simple representation of the system:
+The following algorithms show a simple representation of the system: \label{example}
 
 % Example Algorithm
 \begin{algorithm}[H]
@@ -71,6 +71,9 @@ The following algorithms show a simple representation of the system:
             \EndIf
     \end{algorithmic}
 \end{algorithm} 
+
+Similar to delay scheduling \cite{zaharia_delay_2010}, the scheduler tries to schedule jobs locally first, and 
+expands options gradually. 
 
 The requester consults its policy when it couldn't schedule the job the second time and onwards, and the receiver 
 accepts requests based on its policy too. The policies are pluggable, meaning they can be modified during runtime. 
