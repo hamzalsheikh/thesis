@@ -26,8 +26,13 @@ virtual sharing of resources across clusters.
 
 % I don't want to mention capacity or whatever need because that is policy dependent
 When needed, a cluster communicates with other clusters visible to it, requesting to use resources. A policy \ref{policy} 
-controls when a cluster requests those resources, in addition to dictating when the other clusters accept 
-providing them. In the following algorithm, the scheduler of an over-subscribed cluster tries to schedule some of 
+controls when a cluster requests those resources and when other clusters accept providing them. 
+A simple example to that is in the Lyra system, were the requester (training cluster) policy is request 
+when cluster is over-subscribed, and the receiver (inference cluster) policy is accept when 
+utilization is below 98\% \cite{li_lyra_2023}. 
+
+
+In the following algorithm, the scheduler of an over-subscribed cluster tries to schedule some of 
 its jobs on other clusters nodes. 
 
 % Example Algorithm
