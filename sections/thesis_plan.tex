@@ -3,77 +3,44 @@
 % achieves one of the goals stated in the thesis statement.
 
 To demonstrate the validity of the proposed mechanism, we plan to test different trading policies 
-on different workloads on a scheduling simulator \cite{sched-github}.
+coupled with different workloads on a multi-cluster scheduling simulator \cite{sched-github}.
 
-% if i want to implement the mechanism on kubernetes, need to mention it here
-% and add an implementation section
 \subsection{Simulator}
-The current intuition is adding an extra layer 
-of scheduling when the cluster is over-subscribed \cite{zaharia_delay_2010}, 
-but the mechanism can also be implemented as an additional step in the scheduling process. 
-A simulation is being built to serve as a starting point \cite{sched-github}, 
-and we plan to build the project on top of Kubernetes.
-
-I've implemented a simulation to try to mimic the how clusters can interact and test some of the policies. 
-The implementation is in Go. The end goal of the simulation is the ability to deploy clusters on different 
-nodes/containers and test policies.
-
+Built in Go, it simulates a multi-cluster environment, where each cluster can be run locally or on different nodes. 
+Clusters communicate through http, and jobs are simulated as chunks of time and resources scheduled on the clusters, 
+so running jobs and sending them from one cluster to the other is simple.
 \subsubsection{Components}
-\subsubsection{Registry}
-The registry tracks the availability of the schedulers, and informs clusters with it. 
-This gives visibility for schedulers who need to borrow resources. 
-The actual implementation should be closer to a subscription service, 
-were clusters agree to participate in the market. The registry itself is not a main 
-component for the actual implementation, but if we end up with a policy that needs a control service, 
-or a shared resource, the registry in the simulation will play this role.
+\begin{enumerate}
+    \item Registry: The registry tracks the availability of the clusters in the environment, facilitating service discovery. 
+    \item Scheduler: The main component of the simulator, it runs jobs with specific size and time, and enacts the policies 
+    attached to it.
+    \item Client: Sends jobs to the schedulers.
+\end{enumerate}
+\subsubsection{Current State}
+The simulator is functional, jobs are locally scheduled in FIFO, and the first policy implemented 
+is a resource utilization focused, similar to the example in the methodology \ref{example}. Moreover, 
+OpenTelemetry and Jaeger are used to record metrics and traces, but still not fully functional. % CITE
+Next steps include providing a pluggable interface for the policies, as well as include OpenTelemetry 
+in all components to start evaluation.
 
-\subsubsection{Scheduler}
-The scheduler is built with a cluster as a resource attached to it. 
-This can also be decoupled and a scheduler can exist as a standalone node. 
-The current basic implementation have the scheduler receive job requests through http requests. 
-Jobs have static memory and CPU requirements and time to complete. If not enough resources 
-are found on the cluster then a policy is invoked for borrowing/lending.
-
-
-\subsubsection{Client}
-Client sends jobs to schedulers. The client has a many-to-one relationship with schedulers
-(a scheduler can have multiple clients but not visa versa).
-The client is responsible for deciding the size of jobs and the rate jobs is sent to the scheduler.
-Jobs are sampled from distributions:
-\begin{itemize}
-    \item \textbf{Job size:} Currently following a beta distribution, approximating a bounded normal distribution. 
-    \item \textbf{Job send rate:} Have two options, the Weibull distribution simulating the interarrival time, and 
-    Poisson distribution simulating average jobs in a time interval.
-\end{itemize}
-\subsection{Data Collection}
-Test different policies and different synthetic workloads on the simulator. 
-Run production workloads on the simulator and compare changes.
-
-We have two sources of workloads:
+\subsection{Evaluation}
+\subsubsection{Workloads}
+We have two sources of workloads passed to the Client:
 \begin{enumerate}
     \item Synthetic: Create workloads in an attempt to find a workload-policy match
-    \item Publicly available production workloads:
+    \item Publicly available production workloads: (to be verified)
         \begin{enumerate}
-            \item Google Trace % https://github.com/google/cluster-data/blob/master/ClusterData2019.md
+            \item Google Trace: It includes traces to 8 different clusters. % https://github.com/google/cluster-data/blob/master/ClusterData2019.md
             % the alibaba 2023 version trace might work, needs further investigation
-            \item Alibaba Trace % https://github.com/alibaba/clusterdata
+            \item Alibaba Trace: Includes traces of different clusters. % https://github.com/alibaba/clusterdata
         \end{enumerate}
 \end{enumerate}
 
-\subsection{Evaluation}
+\subsubsection{Policies}
+We provided example policies in the methodology section, and plan to expand on them, finding policies that might 
+fit specific workloads to optimize the performance metrics. 
 
-% Variables
-1- workloads % encompasses cluster util
-2- policies 
-3- cluster sizes
-
-% Measurments
-1- From thesis outcomes : (per cluster and total of all clusters)
-    1-1- Average job completion time (AJCT)
-    1-2- Average cluster utilization
-    1-3- Average cost reduction
-    1-4- 
-2- Mechanism specific: 
-   2-1- time taken to find lender
-   2-2- overhead of borrowing on lender
-   2-3- ... 
+\subsubsection{Measurments}
+Performance measurement is policy requirement specific, and thus the plan is to measure the change in the performance 
+per policy. As each policy has a specific metric to optimize, we plan to measure that metric per policy-workload couple. 
+Metrics would be JCT, cluster utilization, and cost. We also plan to measure the overhead of our system.
