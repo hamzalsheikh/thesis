@@ -23,14 +23,16 @@ when cluster is over-subscribed, and the receiver's (inference cluster) policy i
 utilization is below 98\% \cite{li_lyra_2023}. The trading mechanism is what allows clusters to use each others 
 resources without forfeiting ownership of their resources. 
 
-% show system novelty without direct comparison
 Our mechanism offers bidirectional trading, allowing clusters to trade resources with one another. It also 
 enables trading with multiple clusters, so clusters can trade resources with more than one cluster at a time. 
+% Policy intro
 Policies are created to optimize a specific performance metric, acting as knobs to 
 tune the mechanism and update it as cluster requirements change. They are a set of rules that dictate how each 
-cluster handles trading.
+cluster handles trading. Policies are pluggable and mutable, meaning each cluster can implement its own request and receive 
+policy, and dynamically update it as requirements or conditions change.
 
-The following algorithms show a simple representation of the system: \label{example}
+The following algorithms show a simple representation of the system, with resource utilization as the 
+optimized-for metric: \label{example}
 
 % Example Algorithm
 \begin{algorithm}[H]
@@ -38,7 +40,7 @@ The following algorithms show a simple representation of the system: \label{exam
 \begin{algorithmic}
     \For{job in WaitQueue}
         \State $scheduled \gets ScheduleJob(job)$
-        \If{$scheduled \neq True$ \&\& Policy(job) $==$ True}  \Comment{P: True if waitQueue $> 10$}
+        \If{$scheduled \neq True$ \&\& Policy(job) $==$ True} 
         \State $requestResources(job)$
         \EndIf
     \EndFor
@@ -55,8 +57,8 @@ The following algorithms show a simple representation of the system: \label{exam
 \begin{algorithm}[H]
     \caption{Trading Scheduling Algorithm - Receiver}
     \begin{algorithmic}
-            \State $ resources \gets BorrowRequest $ \Comment{request from another cluster} 
-            \If{$Policy(resources) = True$} \Comment{ P: True if utilization $\leq 80\%$}
+            \State $ resources \gets BorrowRequest $ \Comment{Incoming from another cluster} 
+            \If{$Policy(resources) = True$} 
             \State $sendAcceptRequest(job, cluster)$
             \State $prepareResources(resources)$
             \State $allowAccess$
@@ -68,12 +70,11 @@ Similar to delay scheduling \cite{zaharia_delay_2010}, the scheduler tries to sc
 expands options gradually. 
 
 The requester consults its policy when it couldn't schedule the job the second time and onwards, and the receiver 
-accepts requests based on its policy too. Since the policies are pluggable, requester can reduce 
-the minimum number of jobs in the waitQueue to make the policy more aggressive, 
-or the receiver can increase utilization percentage for more stringent measures.
+accepts requests based on its policy too. As mentioned above, policies are pluggable and mutable, giving both the requester 
+and receiver the freedom to implement and invoke them when needed.
 
-Another policy example would be trying to request higher performing resources than the one locally available 
-to reduce JCT.
-
-And lastly, for cost reduction, a policy would entail requesting resources that are cheaper on other clusters, where 
-clusters can borrow and lend their resources for a token/dollar equivalence.
+Other possible policy examples:
+\begin{enumerate}
+    \item Reducing JCT: Request higher performing resources from other cluster. 
+    \item Cost reduction: Request cheaper resources from other clusters when job requirements allow it. 
+\end{enumerate}
