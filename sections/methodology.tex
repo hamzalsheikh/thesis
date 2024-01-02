@@ -1,18 +1,9 @@
 % This section does not mention the possibility of applying the mechanism to clusters of different organizations
 \section{Methodology}
-
+\vspace{1em}
 \fbox{
-    \begin{minipage}{35em}
-\textbf{Thesis Statement 1:}
-In a multi-cluster architecture, it is possible to increase cluster resource utilization, 
-decrease average job completion time, and/or reduce average cost by incentivizing clusters to 
-share resources through lending and borrowing mechanisms, 
-generalizing resource lending and decoupling it from workload specificity.
-    \end{minipage}
-}
-\fbox{
-    \begin{minipage}{35em}
-\textbf{Thesis Statement 2:}
+    \begin{minipage}{33em}
+\textbf{Thesis Statement:}
 In a multi-cluster architecture, it is possible to increase cluster resource utilization, 
 decrease average job completion time, and/or reduce average cost by 
 providing clusters with a resource trading mechanism and a pluggable policy interface allowing the 
@@ -23,20 +14,21 @@ virtual sharing of resources across clusters.
 % Concept introduction
 % Do not communicate by sharing memory           ; instead, share memory    by communicating.
 % Do not communicate by changing server ownership; instead, share resources by communicating.
-\vspace{2em}
+\vspace{1em}
 % I don't want to mention capacity or whatever need because that is policy dependent
-When needed, a cluster communicates with other clusters visible to it, requesting to use resources. A policy \ref{policy} 
+When needed, a cluster communicates with other clusters visible to it, requesting to use resources. A policy 
 controls when a cluster requests those resources and when other clusters accept providing them. 
-A simple example to that is in the Lyra system, were the requester (training cluster) policy is request 
-when cluster is over-subscribed, and the receiver (inference cluster) policy is accept when 
+A simple example to that is in the Lyra system, were the requester's (training cluster) policy is request 
+when cluster is over-subscribed, and the receiver's (inference cluster) policy is accept when 
 utilization is below 98\% \cite{li_lyra_2023}. The trading mechanism is what allows clusters to use each others 
 resources without forfeiting ownership of their resources. 
 
 % show system novelty without direct comparison
-Our system/mechanism offers bidirectional trading, allowing clusters to trade resources. Moreover, it 
-enables the trading with multiple clusters, so clusters can trade resources with more than one cluster at a time. 
-In addition to that, policies are created to optimize a specific performance metric, acting as knobs to 
-tune performance enhancement.
+Our mechanism offers bidirectional trading, allowing clusters to trade resources with one another. It also 
+enables trading with multiple clusters, so clusters can trade resources with more than one cluster at a time. 
+Policies are created to optimize a specific performance metric, acting as knobs to 
+tune the mechanism and update it as cluster requirements change. They are a set of rules that dictate how each 
+cluster handles trading.
 
 The following algorithms show a simple representation of the system: \label{example}
 
@@ -46,12 +38,12 @@ The following algorithms show a simple representation of the system: \label{exam
 \begin{algorithmic}
     \For{job in WaitQueue}
         \State $scheduled \gets ScheduleJob(job)$
-        \If{$scheduled \neq True$ \&\& Policy(job) $==$ True}  \Comment{ P: True if waitQueue > 10}
+        \If{$scheduled \neq True$ \&\& Policy(job) $==$ True}  \Comment{P: True if waitQueue $> 10$}
         \State $requestResources(job)$
         \EndIf
     \EndFor
 
-    \For{job in ReadyQueue} \Comment{sorted by X policy}
+    \For{job in ReadyQueue}
         \State $scheduled \gets ScheduleJob(job)$
         \If{$scheduled \neq True$}
         \State $WaitQueue \gets WaitQueue + job$
@@ -63,7 +55,7 @@ The following algorithms show a simple representation of the system: \label{exam
 \begin{algorithm}[H]
     \caption{Trading Scheduling Algorithm - Receiver}
     \begin{algorithmic}
-            \State $ resources \gets BorrowRequest $ 
+            \State $ resources \gets BorrowRequest $ \Comment{request from another cluster} 
             \If{$Policy(resources) = True$} \Comment{ P: True if utilization $\leq 80\%$}
             \State $sendAcceptRequest(job, cluster)$
             \State $prepareResources(resources)$
@@ -76,8 +68,8 @@ Similar to delay scheduling \cite{zaharia_delay_2010}, the scheduler tries to sc
 expands options gradually. 
 
 The requester consults its policy when it couldn't schedule the job the second time and onwards, and the receiver 
-accepts requests based on its policy too. The policies are pluggable, meaning they can be modified during runtime. 
-For example, requester can reduce the minimum number of jobs in the waitQueue to make the policy more aggressive, 
+accepts requests based on its policy too. Since the policies are pluggable, requester can reduce 
+the minimum number of jobs in the waitQueue to make the policy more aggressive, 
 or the receiver can increase utilization percentage for more stringent measures.
 
 Another policy example would be trying to request higher performing resources than the one locally available 
