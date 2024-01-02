@@ -6,9 +6,10 @@ To demonstrate the validity of the proposed mechanism, we plan to test different
 coupled with different workloads on a multi-cluster scheduling simulator \cite{sched-github}.
 
 \subsection{Simulator}
-Built in Go, it simulates a multi-cluster environment, where each cluster can be run locally or on different nodes. 
+It simulates a multi-cluster environment, where each cluster can be run locally or on different nodes. 
 Clusters communicate through http, and jobs are simulated as chunks of time and resources scheduled on the clusters, 
-so running jobs and sending them from one cluster to the other is simple.
+easing the implementation of trading resources. 
+
 \subsubsection{Components}
 \begin{enumerate}
     \item Registry: The registry tracks the availability of the clusters in the environment, facilitating service discovery. 
@@ -18,29 +19,37 @@ so running jobs and sending them from one cluster to the other is simple.
 \end{enumerate}
 \subsubsection{Current State}
 The simulator is functional, jobs are locally scheduled in FIFO, and the first policy implemented 
-is a resource utilization focused, similar to the example in the methodology \ref{example}. Moreover, 
-OpenTelemetry and Jaeger are used to record metrics and traces, but still not fully functional. % CITE
-Next steps include providing a pluggable interface for the policies, as well as include OpenTelemetry 
-in all components to start evaluation.
-
+is attempting to improve resource utilization and decrease job queueing time, similar to the example 
+in the methodology \ref{example}. Workloads are created synthetically using probability distributions. 
+Moreover, OpenTelemetry \cite{opentelemetry} and Jaeger \cite{jeager} are used to record metrics 
+and traces, but still don't cover the scope of the whole project.
+\\Next steps in development include:
+\begin{enumerate}
+    \item Develop policies' pluggable interface
+    \item Production workload porting
+    \item Complete telemetry and logging
+\end{enumerate}
 \subsection{Evaluation}
 \subsubsection{Workloads}
 We have two sources of workloads passed to the Client:
 \begin{enumerate}
-    \item Synthetic: Create workloads in an attempt to find a workload-policy match
-    \item Publicly available production workloads: (to be verified)
+    \item Synthetic: workloads created from probability distributions
+    \item Publicly available production workloads: 
         \begin{enumerate}
-            \item Google Trace: It includes traces to 8 different clusters. % https://github.com/google/cluster-data/blob/master/ClusterData2019.md
-            % the alibaba 2023 version trace might work, needs further investigation
-            \item Alibaba Trace: Includes traces of different clusters. % https://github.com/alibaba/clusterdata
-        \end{enumerate}
+            \item Google Trace \cite{google-cluster-data2019}: It includes traces to 8 different clusters. 
+            \item Alibaba Trace \cite{alibabaclusterdata_2023}: Includes traces of different clusters with distinct workloads.        \end{enumerate}
 \end{enumerate}
 
 \subsubsection{Policies}
-We provided example policies in the methodology section, and plan to expand on them, finding policies that might 
-fit specific workloads to optimize the performance metrics. 
+We provided example policies in the methodology section, and plan to expand on them, finding policies that  
+fit specific workloads to optimize the performance metrics, and will be evaluated accordingly. 
 
 \subsubsection{Measurments}
-Performance measurement is policy requirement specific, and thus the plan is to measure the change in the performance 
-per policy. As each policy has a specific metric to optimize, we plan to measure that metric per policy-workload couple. 
-Metrics would be JCT, cluster utilization, and cost. We also plan to measure the overhead of our system.
+We plan to measure the optimized-for metric per policy-workload couple. 
+Metrics are both overall and per-cluster and include:
+\begin{enumerate}
+    \item Average JCT
+    \item Resource utilization
+    \item Cost
+    \item Mechanism overhead
+\end{enumerate}
