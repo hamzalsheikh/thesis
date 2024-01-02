@@ -10,17 +10,14 @@ facilities are also equipped with different clusters for different purposes and 
 For example, 50\% of Kubernetes \cite{verma_large-scale_2015}
 end users have 10+ clusters \cite{noauthor_cncf_2023} 
 , with companies like Mercedes nearing 1000 clusters \cite{noauthor_mercedes-benz_2023}.
-Isolation, location, and scalability are among other reasons organizations deploy multiple clusters.
-% CITE -> https://cloud.google.com/anthos/fleet-management/docs/multi-cluster-use-cases
-
+Isolation, location, and scalability are among other reasons organizations deploy multiple clusters \cite{google-cloud-blog}.
 However, the separation of resources and users into different clusters is not without a cost. 
-Resource partitioning degrades performance % needs CITE
-and leads to non optimal schedules because of reduced scheduler visibility.\\ % needs CITE
+Resource partitioning degrades performance and increases overhead \cite{adv-dis-mutli}.\\ 
 % introducing capacity loaning
 Researchers at ByteDance observed that their inference cluster utilization is usually around 40\% because 
 of diurnal traffic patterns, and that their training cluster is always over subscribed. 
 To retain the benefits of cluster separation, and reduce its cost, they introduced \textit{capacity loaning}, 
-a mechanism that allows clusters to loan resources to other clusters without losing ownership, and built a system on top 
+a mechanism that allows a cluster to lend resources to another cluster without losing ownership, and built a system on top 
 of it called Lyra.
 Their policy allows the training cluster to borrow resources from the inference one, while permitting the 
 later to reclaim resources dynamically. 
@@ -34,7 +31,7 @@ Delay scheduling is an algorithm designed to address the conflict between fairne
 shared clusters. 
 If a job is set to be scheduled according to the fairness policy but the node its data is on is full, 
 the scheduler delays scheduling it in an attempt to schedule it on that node when it frees up. The algorithm have 
-several passes trying to schedule the job as close as it can, increasing the level (how far) it is from its data every time 
+several passes trying to schedule the job as close as it can, increasing how far the job is from its data every pass 
 to guarantee its eventual scheduling \cite{zaharia_delay_2010}.
 %
 
