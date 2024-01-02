@@ -24,7 +24,7 @@ utilization is below 98\% \cite{li_lyra_2023}. The trading mechanism is what all
 resources without forfeiting ownership of their resources. 
 
 Our mechanism offers bidirectional trading, allowing clusters to trade resources with one another. It also 
-enables trading with multiple clusters, so clusters can trade resources with more than one cluster at a time. 
+enables trading with multiple clusters, so clusters can trade resources with more than one cluster at a time. \label{sched-overhead} 
 % Policy intro
 Policies are created to optimize a specific performance metric, acting as knobs to 
 tune the mechanism and update it as cluster requirements change. They are a set of rules that dictate how each 
@@ -75,6 +75,6 @@ and receiver the freedom to implement and invoke them when needed.
 
 Other possible policy examples:
 \begin{enumerate}
-    \item Reducing JCT: Request higher performing resources from other cluster. 
-    \item Cost reduction: Request cheaper resources from other clusters when job requirements allow it. 
+    \item Reducing JCT: Request higher performing resources from other cluster. \label{jct} 
+    \item Cost reduction: Request cheaper resources from other clusters when job requirements allow it. \label{cost} 
 \end{enumerate}
