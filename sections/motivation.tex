@@ -3,24 +3,23 @@ Data center utilization has been widely studied, with average server utilization
 ranging from 10\% to 50\%
 % this paper cites other papers for the percentage of utilization 
 \cite{lo_heracles_2015}. 
-To combat low server utilization and diverse users, systems have been developed to allow diverse workloads to run 
+To combat low server utilization and diverse users' workloads, systems have been developed to allow diverse workloads to run 
 on the same cluster \cite{bhattacharya_hierarchical_2013, hindman_mesos_nodate}. 
-However, this causes increased interference between jobs, and thus, 
+However, this causes increased interference between jobs, thus, 
 facilities are also equipped with different clusters for different purposes and teams \cite{patel_what_2022, li_lyra_2023}. 
-For example, 50\% of Kubernetes \cite{verma_large-scale_2015}
+For example, 50\% of Kubernetes \cite{borg}
 end users have 10+ clusters \cite{noauthor_cncf_2023} 
 , with companies like Mercedes nearing 1000 clusters \cite{noauthor_mercedes-benz_2023}.
 Isolation, location, and scalability are among other reasons organizations deploy multiple clusters \cite{google-cloud-blog}.
-However, the separation of resources and users into different clusters is not without a cost. 
-Resource partitioning degrades performance and increases overhead \cite{adv-dis-mutli}.\\ 
+However, separating resources comes with a cost. Resource partitioning degrades performance and increases overhead \cite{adv-dis-mutli}.\\ 
 % introducing capacity loaning
 Researchers at ByteDance observed that their inference cluster utilization is usually around 40\% because 
 of diurnal traffic patterns, and that their training cluster is always over subscribed. 
 To retain the benefits of cluster separation, and reduce its cost, they introduced \textit{capacity loaning}, 
-a mechanism that allows a cluster to lend resources to another cluster without losing ownership, and built a system on top 
+a mechanism that allows a cluster to lend resources to another cluster without losing ownership and built a system on top 
 of it called Lyra.
 Their policy allows the training cluster to borrow resources from the inference one, while permitting the 
-later to reclaim resources dynamically. 
+latter to reclaim resources dynamically. 
 Compared to a baseline FIFO scheduler, capacity loaning recorded a 1.39x reduction in average queueing time and a 1.31x 
 reduction in job completion time (JCT), proving the effectiveness of the method in a constrained environment. \cite{li_lyra_2023}.
 % Even with the paper constraints (single policy, unidirectional loaning, and a pair of clusters), capacity loaning has 
@@ -30,14 +29,14 @@ reduction in job completion time (JCT), proving the effectiveness of the method 
 Delay scheduling is an algorithm designed to address the conflict between fairness and data locality in 
 shared clusters. 
 If a job is set to be scheduled according to the fairness policy but the node its data is on is full, 
-the scheduler delays scheduling it in an attempt to schedule it on that node when it frees up. The algorithm have 
-several passes trying to schedule the job as close as it can, increasing how far the job is from its data every pass 
+the scheduler delays scheduling it in an attempt to schedule it on that node when it frees up. The algorithm 
+has several passes trying to schedule the job as close as it can, increasing how far the job is from its data every pass 
 to guarantee its eventual scheduling \cite{zaharia_delay_2010}.
-%
+
 
 %Our plan is to build upon this concept, and expand capacity loaning to a more robust and general 
 %mechanism. 
 
-Our plan stems from both delay scheduling and capacity loaning, creating a mechanism for schedulers 
+Our plan stems from delay scheduling and capacity loaning, creating a system for schedulers 
 to trade resources.
 %\hl{possible names?: capacity trading /resource trading / resource fluidity},  we can relate to sky computing too % GO BEYOND THEIR WORK / EVEN MORE THAN GENERALIZATION % We plan to generalize loaning to be non-workload specific. Cluster schedulers will be able to communicate % with each other when needed, borrowing/lending, buying/selling, or negotiating resources. % or (to trade resources)

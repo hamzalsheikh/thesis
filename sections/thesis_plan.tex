@@ -21,7 +21,7 @@ easing the implementation of trading resources.
 The simulator is functional, jobs are locally scheduled in FIFO, and the first policy implemented 
 is attempting to improve resource utilization and decrease job queueing time, similar to the example 
 in the methodology \ref{example}. Workloads are created synthetically using probability distributions. 
-Moreover, OpenTelemetry \cite{opentelemetry} and Jaeger \cite{jeager} are used to record metrics 
+Moreover, OpenTelemetry \cite{opentelemetry} and Jaeger \cite{jaeger} are used to record metrics 
 and traces, but still don't cover the scope of the whole project.
 \\Next steps in development include:
 \begin{enumerate}
@@ -36,12 +36,13 @@ We have two sources of workloads passed to the Client:
     \item Synthetic: workloads created from probability distributions
     \item Publicly available production workloads: 
         \begin{enumerate}
-            \item Google Trace \cite{google-cluster-data2019}: It includes traces to 8 different clusters. 
-            \item Alibaba Trace \cite{alibabaclusterdata_2023}: Includes traces of different clusters with distinct workloads.        \end{enumerate}
+            \item Google Trace \cite{wilkes_yet_2020} \cite{borg}: It includes traces to 8 different clusters. 
+            \item Alibaba Trace \cite{alibaba-latest} \cite{alibabaclusterdata_2023}: Includes traces of different clusters with distinct workloads.        
+        \end{enumerate}
 \end{enumerate}
 
 \subsubsection{Policies}
-We provided example policies in the methodology section, and plan to expand on them, finding policies that  
+We provided example policies in the methodology section and plan to expand on them, finding policies that  
 fit specific workloads to optimize the performance metrics, and will be evaluated accordingly. 
 
 \subsubsection{Measurments}

@@ -18,9 +18,9 @@ virtual sharing of resources across clusters.
 % I don't want to mention capacity or whatever need because that is policy dependent
 When needed, a cluster communicates with other clusters visible to it, requesting to use resources. A policy 
 controls when a cluster requests those resources and when other clusters accept providing them. 
-A simple example to that is in the Lyra system, were the requester's (training cluster) policy is request 
-when cluster is over-subscribed, and the receiver's (inference cluster) policy is accept when 
-utilization is below 98\% \cite{li_lyra_2023}. The trading mechanism is what allows clusters to use each others 
+A simple example to that is in the Lyra system, were the requester's (training cluster) policy is "request 
+when cluster is over-subscribed", and the receiver's (inference cluster) policy is "accept when 
+utilization is below 98\%" \cite{li_lyra_2023}. The trading mechanism is what allows clusters to use each others 
 resources without forfeiting ownership of their resources. 
 
 Our mechanism offers bidirectional trading, allowing clusters to trade resources with one another. It also 
